@@ -10,12 +10,25 @@ internal sealed class MetricsOptionsValidator : IValidateOptions<MetricsOptions>
 {
     public ValidateOptionsResult Validate(string? name, MetricsOptions options)
     {
-        return options is null
-            ? ValidateOptionsResult.Fail("MetricsOptions cannot be null.")
-            : string.IsNullOrWhiteSpace(options.MeterName)
-            ? ValidateOptionsResult.Fail("MetricsOptions.MeterName cannot be null or whitespace.")
-            : options.MeterVersion is not null && string.IsNullOrWhiteSpace(options.MeterVersion)
-            ? ValidateOptionsResult.Fail("MetricsOptions.MeterVersion cannot be whitespace when set.")
-            : ValidateOptionsResult.Success;
+        if (options is null)
+        {
+            return ValidateOptionsResult.Fail("MetricsOptions cannot be null.");
+        }
+
+        var failures = new List<string>();
+
+        if (string.IsNullOrWhiteSpace(options.MeterName))
+        {
+            failures.Add("MetricsOptions.MeterName cannot be null or whitespace.");
+        }
+
+        if (options.MeterVersion is not null && string.IsNullOrWhiteSpace(options.MeterVersion))
+        {
+            failures.Add("MetricsOptions.MeterVersion cannot be whitespace when set.");
+        }
+
+        return failures.Count == 0
+            ? ValidateOptionsResult.Success
+            : ValidateOptionsResult.Fail(failures);
     }
 }

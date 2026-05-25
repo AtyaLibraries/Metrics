@@ -6,11 +6,10 @@ using Atya.Diagnostics.Metrics.Instruments;
 using Atya.Diagnostics.Metrics.Internal;
 using Atya.Diagnostics.Metrics.Options;
 using Atya.Foundation.Guards;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 
-namespace Atya.Diagnostics.Metrics.DependencyInjection;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// Registers Atya metrics services.

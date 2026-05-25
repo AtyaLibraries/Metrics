@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using Atya.Diagnostics.Metrics.Abstractions;
-using Atya.Diagnostics.Metrics.DependencyInjection;
 using Atya.Diagnostics.Metrics.Extensions;
 using Atya.Diagnostics.Metrics.Tags;
 using Microsoft.Extensions.DependencyInjection;

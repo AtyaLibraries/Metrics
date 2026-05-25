@@ -1,5 +1,4 @@
 using Atya.Diagnostics.Metrics.Abstractions;
-using Atya.Diagnostics.Metrics.DependencyInjection;
 using Atya.Diagnostics.Metrics.Internal;
 using Atya.Diagnostics.Metrics.Options;
 using Microsoft.Extensions.DependencyInjection;
@@ -118,5 +117,22 @@ public sealed class MetricsServiceCollectionExtensionsTests
         var result = validator.Validate(null, new MetricsOptions());
 
         _ = result.Succeeded.Should().BeTrue();
+    }
+
+    [Fact]
+    public void MetricsOptionsValidator_Should_Return_All_Failures()
+    {
+        var validator = new MetricsOptionsValidator();
+
+        var result = validator.Validate(null, new MetricsOptions
+        {
+            MeterName = " ",
+            MeterVersion = " ",
+        });
+
+        _ = result.Failed.Should().BeTrue();
+        _ = result.Failures.Should().BeEquivalentTo(
+            "MetricsOptions.MeterName cannot be null or whitespace.",
+            "MetricsOptions.MeterVersion cannot be whitespace when set.");
     }
 }

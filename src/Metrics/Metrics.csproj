@@ -1,30 +1,31 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Atya.Build.Sdk">
 
-    <PropertyGroup>
-        <AssemblyName>Atya.Diagnostics.Metrics</AssemblyName>
-        <PackageId>Atya.Diagnostics.Metrics</PackageId>
-        <RootNamespace>Atya.Diagnostics.Metrics</RootNamespace>
-        <IsPackable>true</IsPackable>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <PackageId>Atya.Diagnostics.Metrics</PackageId>
+    <AssemblyName>Atya.Diagnostics.Metrics</AssemblyName>
+    <RootNamespace>Atya.Diagnostics.Metrics</RootNamespace>
+    <IsPackable>true</IsPackable>
+    <Authors>Arsen Asulyan</Authors>
+    <Copyright>Copyright (c) 2026 Arsen Asulyan</Copyright>
+    <Description>Metrics abstractions and dependency injection helpers for Atya diagnostics packages.</Description>
+    <PackageTags>dotnet;diagnostics;metrics;atya</PackageTags>
+    <RepositoryUrl>https://github.com/AtyaLibraries/Metrics</RepositoryUrl>
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
 
-        <MinVerTagPrefix>v</MinVerTagPrefix>
-        <MinVerDefaultPreReleaseIdentifiers>alpha.0</MinVerDefaultPreReleaseIdentifiers>
-    </PropertyGroup>
+    <!-- MinVer derives the version from git tags (e.g. tag `v1.2.3` -> 1.2.3). -->
+    <MinVerDefaultPreReleaseIdentifiers>alpha.0</MinVerDefaultPreReleaseIdentifiers>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <None Include="README.md" Pack="true" PackagePath="\" />
-        <None Include="..\..\LICENSE" Pack="true" PackagePath="\" Visible="false" />
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" Visible="false" />
+  </ItemGroup>
 
-    <ItemGroup Label="Analyzers + versioning (build-only, not published)">
-        <PackageReference Include="Atya.Foundation.Guards" />
-        <PackageReference Include="Atya.Governance.CodeQuality" PrivateAssets="all" />
-        <PackageReference Include="MinVer" PrivateAssets="all" Condition="'$(RepositoryHasGitDirectory)' == 'true'" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" Condition="'$(RepositoryHasGitDirectory)' == 'true'" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-        <PackageReference Include="Microsoft.Extensions.Options" />
-    </ItemGroup>
+  <ItemGroup Label="Runtime dependencies">
+    <PackageReference Include="Atya.Foundation.Guards" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+  </ItemGroup>
 
 </Project>

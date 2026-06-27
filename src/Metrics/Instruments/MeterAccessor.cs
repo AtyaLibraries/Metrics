@@ -27,7 +27,7 @@ public sealed class MeterAccessor : IMeterAccessor, IDisposable
         var metricsOptions = Guard.AgainstNull(options.Value);
         var meterName = Guard.AgainstNullOrWhiteSpace(metricsOptions.MeterName, nameof(metricsOptions.MeterName));
 
-        this._meter = new Meter(meterName, metricsOptions.MeterVersion);
+        _meter = new Meter(meterName, metricsOptions.MeterVersion);
     }
 
     /// <inheritdoc />
@@ -35,8 +35,8 @@ public sealed class MeterAccessor : IMeterAccessor, IDisposable
     {
         get
         {
-            this.ThrowIfDisposed();
-            return this._meter;
+            ThrowIfDisposed();
+            return _meter;
         }
     }
 
@@ -44,63 +44,63 @@ public sealed class MeterAccessor : IMeterAccessor, IDisposable
     public Counter<T> CreateCounter<T>(string name, string? unit = null, string? description = null)
         where T : struct
     {
-        this.ThrowIfDisposed();
-        return this._meter.CreateCounter<T>(ValidateInstrumentName(name), unit, description);
+        ThrowIfDisposed();
+        return _meter.CreateCounter<T>(ValidateInstrumentName(name), unit, description);
     }
 
     /// <inheritdoc />
     public UpDownCounter<T> CreateUpDownCounter<T>(string name, string? unit = null, string? description = null)
         where T : struct
     {
-        this.ThrowIfDisposed();
-        return this._meter.CreateUpDownCounter<T>(ValidateInstrumentName(name), unit, description);
+        ThrowIfDisposed();
+        return _meter.CreateUpDownCounter<T>(ValidateInstrumentName(name), unit, description);
     }
 
     /// <inheritdoc />
     public Histogram<T> CreateHistogram<T>(string name, string? unit = null, string? description = null)
         where T : struct
     {
-        this.ThrowIfDisposed();
-        return this._meter.CreateHistogram<T>(ValidateInstrumentName(name), unit, description);
+        ThrowIfDisposed();
+        return _meter.CreateHistogram<T>(ValidateInstrumentName(name), unit, description);
     }
 
     /// <inheritdoc />
     public ObservableGauge<T> CreateObservableGauge<T>(string name, Func<T> observeValue, string? unit = null, string? description = null)
         where T : struct
     {
-        this.ThrowIfDisposed();
+        ThrowIfDisposed();
         _ = Guard.AgainstNull(observeValue);
-        return this._meter.CreateObservableGauge(ValidateInstrumentName(name), observeValue, unit, description);
+        return _meter.CreateObservableGauge(ValidateInstrumentName(name), observeValue, unit, description);
     }
 
     /// <inheritdoc />
     public ObservableCounter<T> CreateObservableCounter<T>(string name, Func<T> observeValue, string? unit = null, string? description = null)
         where T : struct
     {
-        this.ThrowIfDisposed();
+        ThrowIfDisposed();
         _ = Guard.AgainstNull(observeValue);
-        return this._meter.CreateObservableCounter(ValidateInstrumentName(name), observeValue, unit, description);
+        return _meter.CreateObservableCounter(ValidateInstrumentName(name), observeValue, unit, description);
     }
 
     /// <inheritdoc />
     public ObservableUpDownCounter<T> CreateObservableUpDownCounter<T>(string name, Func<T> observeValue, string? unit = null, string? description = null)
         where T : struct
     {
-        this.ThrowIfDisposed();
+        ThrowIfDisposed();
         _ = Guard.AgainstNull(observeValue);
-        return this._meter.CreateObservableUpDownCounter(ValidateInstrumentName(name), observeValue, unit, description);
+        return _meter.CreateObservableUpDownCounter(ValidateInstrumentName(name), observeValue, unit, description);
     }
 
     /// <inheritdoc />
     public void Dispose()
     {
-        if (this._disposed)
+        if (_disposed)
         {
             return;
         }
 
-        this._meter.Dispose();
-        this._disposed = true;
+        _meter.Dispose();
+        _disposed = true;
     }
 
     private static string ValidateInstrumentName(string name)
@@ -110,6 +110,6 @@ public sealed class MeterAccessor : IMeterAccessor, IDisposable
 
     private void ThrowIfDisposed()
     {
-        ObjectDisposedException.ThrowIf(this._disposed, this);
+        ObjectDisposedException.ThrowIf(_disposed, this);
     }
 }

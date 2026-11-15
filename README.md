@@ -41,7 +41,4 @@ Public API changes must be tracked in src/Metrics/PublicAPI.Unshipped.txt.
 
 ## Release
 
-Publishing is handled by `.github/workflows/publish-nuget.yml`. The workflow restores, audits
-dependencies, verifies formatting, builds, tests, packs with package validation, verifies stable
-`.nupkg` and `.snupkg` artifacts, publishes to NuGet.org, tags the release, and creates a GitHub
-release.
+Releases are published by the central publisher, not by a workflow in this repository. After promoting `development` to `master` and tagging the `master` commit, a maintainer runs `gh workflow run publish.yml --repo AtyaLibraries/publisher -f repository=AtyaLibraries/Metrics -f ref=<tag>`; see the publisher RUNBOOK (https://github.com/AtyaLibraries/publisher/blob/main/docs/RUNBOOK.md).
